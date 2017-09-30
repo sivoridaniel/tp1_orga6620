@@ -10,7 +10,7 @@ OBJ = common.o commonfunc.o
 default: clean bin
 
 bin: 
-	$(CC) $(CFLAGS) -o common common.c commonfunc.c commonfunc.h -D_VERSION_=\"$(VERSION)\"
+	$(CC) $(CFLAGS) -o common common.c commonfunc.c commonfunc.h mathfunc.c mathfunc.h -D_VERSION_=\"$(VERSION)\"
 
 clean:
 	$(RM) common

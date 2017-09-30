@@ -26,15 +26,6 @@
 
 #define ALGUN_PROBLEMA 0
 
-//Pre: Se ingresan dos números.
-//Pos: Se retorna el máximo común divisor.
-int mcd(int numeroBajo, int numeroAlto);
-
-
-//Pre: Se ingresan dos números.
-//Pos: Se retorna el mínimo común múltiplo.
-int mcm(int numeroBajo, int numeroAlto);
-
 //Pre: Se ingresa el arreglo y su cantidad máxima de elementos.
 //Pos: Los valores distintos a cero en el rreglo serán los números primos buscados. 
 void encontrarNumerosPrimos(int tope, int arreglo[]);
