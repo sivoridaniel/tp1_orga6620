@@ -1,0 +1,82 @@
+\documentclass[a4paper,10pt]{article}
+% Paquete para la inclusion de graficos.
+\usepackage{graphicx}
+\usepackage[ansinew]{inputenc}
+\usepackage[spanish]{babel}
+% Paqiete para la inclusion de PDFs.
+\usepackage{pdfpages}
+
+\title{
+	\textbf{Trabajo Práctico Nº 1: Conjunto de instrucciones MIPS}
+}
+
+\author{
+	Sebastian Ripari, \textit{Padrón Nro. 96.453}\\
+	\texttt{sebastiandanielripari@hotmail.com}\\[2.5ex]
+	Cesar Emanuel Lencina, \textit{Padrón Nro. 96.078}\\
+	\texttt{cesar\char`_1990@live.com}\\[2.5ex]
+	Pablo Sivori, \textit{Padrón Nro. 84.026}\\
+	\texttt{sivori.daniel@gmail.com}\\[2.5ex]
+	\normalsize{2do. Cuatrimestre de 2017}\\
+	\normalsize{66.20 Organización de Computadoras  $-$ Práctica Jueves}\\
+	\normalsize{Facultad de Ingeniería, Universidad de Buenos Aires}\\
+ }
+
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}   % quita el número en la primer página
+
+
+\begin{abstract}
+Se implemento un programa que realiza el calculo del maximo comun divisor y del minimo comun multiplo,
+mediante el uso del Algoritmo de Euclides. Para la implementacion del algortimo, se utilizo el lenguaje C, y con la particularidad de las funciones matematicas fueron llevadas a cabo usando Assembler de MIPS. Por ende la compilacion del programa, comprende el linkeo de estas funciones en Assembler.
+\end{abstract}
+
+\section{Introducción}
+El \textit{algoritmo de Euclides} es un método antiguo y eficaz para calcular el máximo común divisor (MCD). Fue originalmente descrito por Euclides en su obra Elementos. El \textit{algoritmo de Euclides extendido} es una ligera modificacion que permite ademas expresar al maximo comun divisor como una combinacion lineal.
+
+\section{Este es el Título de una Sección}
+
+Texto de la sección...
+
+\subsection{Este es el Título de una Subsección}
+
+Texto de la subsección...
+
+
+\section{Este es el Título de Otra Sección}
+
+Texto de la otra sección. En la figura~\ref{fig001} se muestra un ejemplo de cómo presentar las ilustraciones del informe.
+
+\begin{figure}[!htp]
+\begin{center}
+%\includegraphics[width=0.5\textwidth]{fig001.eps}
+\caption{Facultad de Ingeniería $-$ Universidad de Buenos Aires.} \label{fig001}
+\end{center}
+\end{figure}
+
+
+\subsection{Este es el Título de Otra Subsección}
+
+Texto de la otra subsección...
+
+
+\section{Conclusiones}
+
+Se presentó un modelo para que los alumnos puedan tomar como referencia en la redacción de sus informes de trabajos prácticos.
+
+
+\begin{thebibliography}{99}
+
+\bibitem{INT06} Intel Technology \& Research, ``Hyper-Threading Technology,'' 2006, http://www.intel.com/technology/hyperthread/.
+
+\bibitem{HEN00} J. L. Hennessy and D. A. Patterson, ``Computer Architecture. A Quantitative
+Approach,'' 3ra Edición, Morgan Kaufmann Publishers, 2000.
+
+\bibitem{LAR92} J. Larus and T. Ball, ``Rewriting Executable Files to Mesure Program Behavior,'' Tech. Report 1083, Univ. of Wisconsin, 1992.
+
+\end{thebibliography} 
+
+\end{document}
