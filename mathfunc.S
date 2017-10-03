@@ -26,7 +26,10 @@ mcd:
     	.cprestore	SF_MCD_GP_POS
 	move		$fp, sp
 	###FIN INICIALIZACION DEL STACK FRAME DE LA FUNCION MCD###
-       	
+
+	sw		a0, 16($fp)		#guardo los argumentos en la aba de la func que me llamo
+	sw		a1, 20($fp)       	
+
 	bgtz		a0, iterando_mcd	#Si a0 > 0, ingresa al loop		
 	move		v0, a1			#Asigno en v0 el valor del parametro numeroAlto	
 	j		fin_mcd			#Si a0 <=0, salta a fin
@@ -45,8 +48,6 @@ fin_mcd:
 	move		v0, a1		        #El numero alto es lo que retorna la funcion
 	###RESTAURO LOS REGISTROS###
 	move		sp,  $fp
-	lw              a0,  16($fp)
-	lw		a1,  20($fp)
 	lw		gp,  SF_MCD_GP_POS(sp)
 	lw		$fp, SF_MCD_FP_POS(sp)
 	###DESTRUYO EL STACK FRAME###
@@ -86,8 +87,8 @@ mcm:
 	move		$fp, sp
 	###FIN INICIALIZACION DEL STACK FRAME DE LA FUNCION MCM###
 
-	sw		a0, 0($fp)			#guardo en el stack el valor del argumento a0 para luego recuperarlo en mcd
-	sw		a1, 4($fp)			#guardo en el stack el valor del argumento a1 para luego recuperarlo en mcd
+        sw		a0, SF_MCM_A0_POS($fp)		#guardo en la aba de la func que me llamo los argumentos
+	sw		a1, SF_MCM_A1_POS($fp)		
 
 	mult		a0, a1				#multiplico numeroBajo*numeroAlto = numerador
 	mflo		t0				#guardo en t0 el resultado de la multiplicacion anterior (numerador)
@@ -108,8 +109,6 @@ sigue:
 	lw		ra, SF_MCM_RA_POS(sp)
 	lw		gp, SF_MCM_GP_POS(sp)
 	lw		$fp, SF_MCM_FP_POS(sp)
-        lw		a0, SF_MCM_A0_POS($fp)		#leo el argumento numeroBajo del stack frame de la caller y lo cargo en a0
-    	lw		a1, SF_MCM_A1_POS($fp)		#leo el argumento numeroAlto del stack frame de la caller y lo cargo en a1
 	###DESTRUYO EL STACK FRAME###
 	addu		sp, sp, SF_SIZE_MCM
 	###RETORNO A LA SIGUIENTE INSTRUCCION DE LA FUNC QUE LLAMO A CMD###
