@@ -36,16 +36,160 @@ mediante el uso del Algoritmo de Euclides. Para la implementacion del algortimo,
 \section{Introducción}
 El \textit{algoritmo de Euclides} es un método antiguo y eficaz para calcular el máximo común divisor (MCD). Fue originalmente descrito por Euclides en su obra Elementos. El \textit{algoritmo de Euclides extendido} es una ligera modificacion que permite ademas expresar al maximo comun divisor como una combinacion lineal.
 
-\section{Este es el Título de una Sección}
+\section{Desarrollo}
+\subsection{Consideraciones:}
 
-Texto de la sección...
+\begin{enumerate}
+\item Antes de realizar la codificación de las funciones MCD y MCM en código MIPS 32 se hizo un gráfico del stack frame de ambas, teniendo en cuenta que la función MCD se la dibujo sin ABA y sin el registro ra (return address), y lo contrario con la función MCM la cual invoca a la anterior, resultando ser una función no hoja. Siguiendo los lineamientos del stack frame (SF) se crean 4 áreas en el SF de cada función (SRA, FRA, LTA y ABA).
+\item Cada area del stack frame debe tener su padding si lo necesita, para que sean múltiplos de 8 bytes.
 
-\subsection{Este es el Título de una Subsección}
+\item Con el stack de ambas funciones comenzamos pasar el código de C a lenguaje MIPS 32, respetando la convención de la ABI.
 
-Texto de la subsección...
+\item En el código MIPS 32 utilizamos el include mips/regdef.h para utilizar las constantes sp, fp, t1, …, etc y de esta manera no tener que utilizar los números de registros \verb|($0,$1,....,$32)|.
+
+\item Se utiliza la directiva .globl mcd y .globl mcm para que ambas funciones puedan ser llamadas desde otro archivo.
+
+\item Se crean constantes para definir el tamaño del stack frame de las funciones así como también la posición de los registros fp, sp y ra. De esta manera si hay algún cambio en la posición donde se encuentran en el stack, solo modificamos el valor de la constante.
+
+\item Ponemos el align 2 para que las instrucciones estén alineadas 4 bytes. De esta manera el program counter avanzará de a 4 bytes.
+
+\item Para facilitar el paso anterior, se creo una carpeta compartida al netbsd, la cual contenia los archivos con el código fuente a ejecutar. Para esto montamos la carpepeta una vez realizado el tunel. Para esto ejecutamos el comando:\newline
+sshfs -p 2222 -C root@127.0.0.1:/root/tp1/\newline/home/username/workspace/orga6620\_mounted/.\newline De esta manera podemos editar los archivos directamente y luego compilarlos en netbsd sin tener la necesidad de hacer una transferencia (copy) de los archivos modificados a esta carpeta.
+
+\end{enumerate}
+
+\subsection{Proceso de compilación:}
+
+Para compilar el programa utilizamos el siguiente Makefile:\newline
+
+\# Build version\newline
+VERSION = 0\newline
+
+\# Compiler and env set up\newline
+CC=gcc\newline
+CFLAGS  = -Wall -O0 \newline
+OBJ = common.o commonfunc.o\newline
+
+\# Rules\newline
+default: clean bin\newline
+
+bin: 
+\verb|\$(CC) $(CFLAGS) -o common common.c commonfunc.c mathfunc.S -D_VERSION_=\"\$(VERSION)\"|\newline
+
+clean:
+\verb|$(RM) common|\newline
+
+En CFLAGS ponemos -O0 para apagar las optimizaciones.\newline
+
+Desde la terminal nos posicionamos en la carpeta tp1\_orga6620 y corremos el comando make. De esta manera ira a la regla default ejecutando el clean y luego el bin para generar el archivo common (nombre del programa ejecutable). Esto se corre en netbsd para generar el ejecutable que incluya el código MIPS 32 de las funciones, el cual se encuentra en el archivo mathfunc.S.
+
+\section{Casos de prueba:}
+
+Ejecutamos desde la carpeta tp1\_orga6620/pruebas/ el script pruebas.sh, en netbsd con gxemul, con el siguiente comando bash pruebas.sh. De esta manera obtenemos el siguiente resultado:\newline
+
+root@:\textasciitilde/tp1/tp1\_orga6620/Pruebas\# bash pruebas.sh|
+
+\subsection{Comienzo de pruebas:}
+
+===================== TEST 1 ==================\newline
+Test 1: Mostramos el mensaje de ayuda usando la opcion -h.\newline
+\verb|Usage: |
+\verb|        common -h|
+\verb|        common -V|
+\verb|        common [options] M N|
+\verb|Options:|
+\verb|        -h,             --help          Prints usage information.|
+\verb|        -V,             --version       Prints version information.|
+\verb|        -o,             --output        Path to output file.|
+\verb|        -d              --divisor       Just the divisor|
+\verb|        -m              --multiple      Just the multiple|
+\verb|Examples:|
+\verb|        common -o - 256 19|
+
+=================== FIN TEST ================\newline
+
+==================== TEST 2 =================\newline
+Test 2: Mostramos la versión del common usando la opción -V. \newline
+ Common version 1.0 \newline
+================== FIN TEST 2 ===============\newline
+
+=================== TEST 3 ==================\newline
+Test 3: Mostramos por stdout el máximo común divisor entre 5 y 10.\newline
+5\newline
+
+================== FIN TEST =================\newline
+
+=================== TEST 4 ==================\newline
+Test 4: Mostramos por stdout el minimo común múltiplo entre 5 y 10.\newline
+10\newline
+================== FIN TEST =================\newline
+
+=================== TEST 5 ==================\newline
+Test 5: Mostramos por stdout el mcm y el mcd entre 5 y 10.\newline
+5\newline
+10\newline
+=================FIN TEST =================\newline
+
+=================TEST 6=================\newline
+Test 6: Mostramos por stdout el mcd entre 256 y 192.\newline
+64\newline
+=================FIN TEST =================\newline
+
+=================TEST 7=================\newline
+Test 7: Mostramos por stdout el mcm entre 256 y 192.\newline
+768\newline
+=================FIN TEST =================\newline
+
+=================TEST 8=================\newline
+Test 8: Mostramos por stdout el mcd y el mcm entre 256 y 192.\newline
+64\newline
+768\newline
+=================FIN TEST =================\newline
+
+=================TEST 9=================\newline
+Test 9: Mostramos por stdout el mcd entre 1111 y 1294.\newline
+1\newline
+=================FIN TEST =================\newline
+
+=================TEST 10=================\newline
+Test 10: Mostramos por stdout el mcm entre 1111 y 1294.\newline
+1437634\newline
+=================FIN TEST 10=================\newline
+
+=================TEST 11=================\newline
+Test 11: Mostramos por stdout el mcd y el mcm entre 1111 y 1294.\newline
+1\newline
+1437634\newline
+=================FIN TEST 11=================\newline
+
+=================TEST 12=================\newline
+Test 12: Ingresamos un comando invalido (./common -i 5 10).\newline
+=================FIN TEST 12=================\newline
+
+=================TEST 13=================\newline
+Test 13: Ingresamos un argumento extra en la opción -h (./common -h 10).\newline
+=================FIN TEST 13=================\newline
+
+=================TEST 14=================\newline
+Test 14: Ingresamos un comando invalido (./common aaa bbb ccc ).\newline
+=================FIN TEST 14=================\newline
+
+=================TEST 15=================\newline
+Test 15: No pasamos ningún parámetro (./common).\newline
+=================FIN TEST 15=================\newline
+
+=================TEST 16=================\newline
+Test 16: No pasamos el parámetro número en la opción -d (./common -d).\newline
+=================FIN TEST 16=================\newline
+
+=================TEST 17=================\newline
+Test 17: Pasamos letras en lugar del número (./common -d -o - sss).\newline
+=================FIN TEST 17=================\newline
+
+=================FIN PRUEBAS=================\newline
 
 
-\section{Este es el Título de Otra Sección}
+
 
 Texto de la otra sección. En la figura~\ref{fig001} se muestra un ejemplo de cómo presentar las ilustraciones del informe.
 
@@ -64,8 +208,8 @@ Texto de la otra subsección...
 
 \section{Conclusiones}
 
-Se presentó un modelo para que los alumnos puedan tomar como referencia en la redacción de sus informes de trabajos prácticos.
-
+Este trabajo práctico nos sirvió para ver cómo utilizar correctamente el stack de una función, respetando la convención de la ABI. También notamos que es necesario tener presente el esquema del stack de cada función dado que nos resultó muy importante a la hora de realizar el código de ambas funciones en MIPS 32.
+Otro hito importante fue el uso de gdb, mediante el cual pudimos debuguear el programa para solucionar algunos inconvenientes presentados en las funciones hechas en MIPS 32. Con gdb pudimos ir corroborando los valores que iban tomando los registros al momento de ejecutar una instrucción, y de esta manera poder detectar la línea que teníamos que corregir si había algún valor que no era el esperado.
 
 \begin{thebibliography}{99}
 
