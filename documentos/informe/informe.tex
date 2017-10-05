@@ -24,17 +24,24 @@
 	\normalsize{Facultad de Ingeniería, Universidad de Buenos Aires}\\
 }
 
+\date{}
+
 \begin{document}
 
 \maketitle
 \thispagestyle{empty}   % quita el número en la primer página
 
-\null\newpage
-
 \begin{abstract}
 Se implemento un programa que realiza el calculo del maximo comun divisor y del minimo comun multiplo,
 mediante el uso del Algoritmo de Euclides. Para la implementacion del algortimo, se utilizo el lenguaje C, y con la particularidad de las funciones matematicas fueron llevadas a cabo usando Assembler de MIPS. Por ende la compilacion del programa, comprende el linkeo de estas funciones en Assembler.
 \end{abstract}
+
+\null\newpage
+
+\tableofcontents
+
+\null\newpage
+
 
 \section{Introducción}
 El \textit{algoritmo de Euclides} es un método antiguo y eficaz para calcular el máximo común divisor (MCD). Fue originalmente descrito por Euclides en su obra Elementos. El \textit{algoritmo de Euclides extendido} es una ligera modificacion que permite ademas expresar al maximo comun divisor como una combinacion lineal.
@@ -244,10 +251,13 @@ Otro hito importante fue el uso de gdb, mediante el cual pudimos debuguear el pr
 \null\newpage
 
 \section{El código Assembler:}
-	\lstinputlisting[language={[x86masm]Assembler}, firstline=1, lastline=45, basicstyle=\small]{../../mathfunc.S}
+\lstinputlisting[language={[x86masm]Assembler}, firstline=1, lastline=45, basicstyle=\small]{../../mathfunc.S}
+
 \newpage
 
-\includepdf[pages=-]{src/enunciado.pdf}
+\includepdf[pages={1-}]{src/enunciado.pdf}
+
+\newpage
 
 \begin{thebibliography}{99}
 
