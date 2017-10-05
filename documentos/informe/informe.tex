@@ -85,6 +85,8 @@ En CFLAGS ponemos -O0 para apagar las optimizaciones.\newline
 
 Desde la terminal nos posicionamos en la carpeta tp1\_orga6620 y corremos el comando make. De esta manera ira a la regla default ejecutando el clean y luego el bin para generar el archivo common (nombre del programa ejecutable). Esto se corre en netbsd para generar el ejecutable que incluya el código MIPS 32 de las funciones, el cual se encuentra en el archivo mathfunc.S.
 
+\null\newpage
+
 \section{Casos de prueba:}
 
 Ejecutamos desde la carpeta tp1\_orga6620/pruebas/ el script pruebas.sh, en netbsd con gxemul, con el siguiente comando bash pruebas.sh. De esta manera obtenemos el siguiente resultado:\newline
@@ -169,6 +171,8 @@ No pasamos el parámetro número en la opción -d (./common -d).
 \subsubsection{Test 17}
 Pasamos letras en lugar del número (./common -d -o - sss).
 
+\null\newpage
+
 \section{Partes del codigo relevantes}
 
 \subsection{MCD}
@@ -218,7 +222,6 @@ Aquí es importante destacar que antes de hacer el llamado a la función mcd, se g
 \begin{figure}[!htp]
 \begin{center}
 
-
 \end{center}
 \end{figure}
 
@@ -229,7 +232,11 @@ Otro hito importante fue el uso de gdb, mediante el cual pudimos debuguear el pr
 
 \begin{thebibliography}{99}
 
-\bibitem{INT06} Algoritmo de Euclides, https://es.wikipedia.org/wiki/Algoritmo\verb|_de_|Euclides.
+\bibitem{euclides} Algoritmo de Euclides, https://es.wikipedia.org/wiki/Algoritmo\verb|_de_|Euclides
+\bibitem{gdb} Documentación GDB, https://www.gnu.org/software/gdb/documentation
+\bibitem{func} Llamadas a funciones, func\_call\_conv.pdf, Yahoo Groups - Orga-Comp
+\bibitem{mips} Conjunto de instrucciones, MIPSQuickRef.pdf, Yahoo Groups - Orga-Comp
+
 
 \end{thebibliography} 
 
