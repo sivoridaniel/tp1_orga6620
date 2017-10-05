@@ -48,7 +48,7 @@ void mostrarAyuda(){
 	printf("	common -o - 256 192\n");
 }
 
-//Se verifica que los parámetros ingresados sigan el formato predeterminado
+//Se verifica que los parametros ingresados sigan el formato predeterminado
 int validarArgumentos(int argc, char **argv){
 	if ((argc > TODOS_LOS_ARGUMENTOS) || (argc < DOS_ARGUMENTOS)){
 		return ERROR_COMANDO_INVALIDO;
@@ -97,7 +97,7 @@ int validarArgumentos(int argc, char **argv){
 }		
 
 
-//Se realiza la acción previamente validada, ya sea mostrar la versión, la ayuda, mcm o mcd.
+//Se realiza la accion previamente validada, ya sea mostrar la version, la ayuda, mcm o mcd.
 int realizarAccion(int argc, char **argv){
 	
 	int mensajeDeError = TODO_OK;
