@@ -5,7 +5,8 @@
 \usepackage[spanish]{babel}
 % Paqiete para la inclusion de PDFs.
 \usepackage{pdfpages}
-\graphicspath{ {images/} }
+\usepackage{listings}
+\graphicspath{ {src/images/} }
 
 \title{
 	\textbf{Trabajo Práctico Nº 1: Conjunto de instrucciones MIPS}
@@ -229,6 +230,24 @@ Aquí es importante destacar que antes de hacer el llamado a la función mcd, se g
 
 Este trabajo práctico nos sirvió para ver cómo utilizar correctamente el stack de una función, respetando la convención de la ABI. También notamos que es necesario tener presente el esquema del stack de cada función dado que nos resultó muy importante a la hora de realizar el código de ambas funciones en MIPS 32.
 Otro hito importante fue el uso de gdb, mediante el cual pudimos debuguear el programa para solucionar algunos inconvenientes presentados en las funciones hechas en MIPS 32. Con gdb pudimos ir corroborando los valores que iban tomando los registros al momento de ejecutar una instrucción, y de esta manera poder detectar la línea que teníamos que corregir si había algún valor que no era el esperado.
+
+\null\newpage
+
+\section{El código fuente, en lenguaje C:}
+	
+	\lstinputlisting[language=C]{../../common.c}
+	%\lstinputlisting[language=C]{../../commonfunc.h}
+	%\lstinputlisting[language=C]{../../commonfunc.c}
+	%\lstinputlisting[language=C]{../../mathfunc.h}	
+	%\lstinputlisting[language=C]{../../mathfunc.c}	
+
+\null\newpage
+
+\section{El código Assembler:}
+	\lstinputlisting[language={[x86masm]Assembler}, firstline=1, lastline=45, basicstyle=\small]{../../mathfunc.S}
+\newpage
+
+\includepdf[pages=-]{src/enunciado.pdf}
 
 \begin{thebibliography}{99}
 
