@@ -58,15 +58,20 @@ int validarArgumentos(int argc, char **argv){
 		if (strcmp(argv[OPCION], "-h") != CORRECTO){
 			if (strcmp(argv[OPCION], "-V") != CORRECTO){
 				if (argc > TRES_ARGUMENTOS){
-					if (((strcmp(argv[OPCION], "-d") != CORRECTO) && (strcmp(argv[OPCION], "-m") != CORRECTO) && (strcmp(argv[OPCION], "-o") != CORRECTO)) || ((strcmp(argv[OPCION_OUTPUT_FILE], "-o") != CORRECTO))){
+					if (((strcmp(argv[OPCION], "-d") != CORRECTO) &&
+						 (strcmp(argv[OPCION], "-m") != CORRECTO) &&
+						 (strcmp(argv[OPCION], "-o") != CORRECTO)) ||
+						 ((strcmp(argv[OPCION_OUTPUT_FILE], "-o") != CORRECTO))){
 						return ERROR_COMANDO_INVALIDO;
 					}
 					else {
-						if ((atoi(argv[argc-1]) > MAXIMO) || (atoi(argv[argc-1]) < MINIMO)){
+						if ((atoi(argv[argc-1]) > MAXIMO) ||
+						    (atoi(argv[argc-1]) < MINIMO)) {
 							return ERROR_FUERA_DE_RANGO;
 						}
 		
-						if ((atoi(argv[argc-2]) > MAXIMO) || (atoi(argv[argc-2]) < MINIMO)){
+						if ((atoi(argv[argc-2]) > MAXIMO) ||
+						    (atoi(argv[argc-2]) < MINIMO)) {
 							return ERROR_FUERA_DE_RANGO;
 						}
 					}
@@ -129,7 +134,8 @@ int realizarAccion(int argc, char **argv){
 				}
 			}
 			mensajeDeError = generarArchivo(resultado);
-			if (((argc > TRES_ARGUMENTOS) && (strcmp(argv[OPCION_GUION], "-") == CORRECTO)) || (argc == TRES_ARGUMENTOS)){
+			if (((argc > TRES_ARGUMENTOS) && (strcmp(argv[OPCION_GUION], "-") == CORRECTO)) ||
+				 (argc == TRES_ARGUMENTOS)){
 				imprimirPorPantalla(resultado);
 			}
 		}
