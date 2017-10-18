@@ -51,6 +51,7 @@ El \textit{algoritmo de Euclides} es un método antiguo y eficaz para calcular el
 
 \begin{enumerate}
 \item Antes de realizar la codificación de las funciones MCD y MCM en código MIPS 32 se hizo un gráfico del stack frame de ambas, teniendo en cuenta que la función MCD se la dibujo sin ABA y sin el registro ra (return address), y lo contrario con la función MCM la cual invoca a la anterior, resultando ser una función no hoja. Siguiendo los lineamientos del stack frame (SF) se crean 4 áreas en el SF de cada función (SRA, FRA, LTA y ABA).
+
 \item Cada area del stack frame debe tener su padding si lo necesita, para que sean múltiplos de 8 bytes.
 
 \item Con el stack de ambas funciones comenzamos pasar el código de C a lenguaje MIPS 32, respetando la convención de la ABI.
