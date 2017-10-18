@@ -26,8 +26,8 @@
 
 #define ALGUN_PROBLEMA 0
 
-//Pre: Se ingresa el arreglo y su cantidad máxima de elementos.
-//Pos: Los valores distintos a cero en el rreglo serán los números primos buscados. 
+//Pre: Se ingresa el arreglo y su cantidad maxima de elementos.
+//Pos: Los valores distintos a cero en el arreglo seran los numeros primos buscados. 
 void encontrarNumerosPrimos(int tope, int arreglo[]);
 
 
@@ -36,24 +36,25 @@ void encontrarNumerosPrimos(int tope, int arreglo[]);
 void imprimirPorPantalla(int resultado[]);
 
 //Pre: Se ingresa el arreglo.
-//Pos: Se crea un archivo de texto en el cual se guardarán los resultados.
+//Pos: Se crea un archivo de texto en el cual se guardaran los resultados.
 int generarArchivo(int arreglo[]);
 
-//Imprime por pantalla las instrucciones de uso de erat
+//Imprime por pantalla las instrucciones de uso
 void mostrarAyuda();
 
-//Imprime por pantalla la versión de erat
+//Imprime por pantalla la version
 void mostrarVersion();
 
-//Verifica que los argumentos sean -h, -V, -o N, - N; donde N es un entero mayor que 2 y menor que el máximo (yo puse 4096).
+//Verifica que los argumentos sean -h, -V, -o N, - N; 
+//donde N es un entero mayor que 2 y menor que el maximo (yo puse 4096).
 //Devuelve: 1 si el entero se escapa del rango predeterminado.
-//			2 si no se ingresaron comando válidos.
-//			0 si todos los argumentos son válidos y se puede proceder.
+//			2 si no se ingresaron comando validos.
+//			0 si todos los argumentos son validos y se puede proceder.
 int validarArgumentos(int argc, char **argv);
 
-//Realizará alguna de las acciones:
-//	-h muestra el menú de ayuda.
-//	-V muestra la versión.
+//Realizara alguna de las acciones:
+//	-h muestra el menu de ayuda.
+//	-V muestra la version.
 //	-o muestra por pantalla y crea un archivo.
 //	-  muestra por pantalla.
 int realizarAccion(int argc, char **argv);

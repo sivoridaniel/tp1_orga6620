@@ -23,29 +23,38 @@ mcd:
 	.set		reorder
 	subu		sp, sp, SF_SIZE_MCD
 	sw		$fp, SF_MCD_FP_POS(sp) 
-    	.cprestore	SF_MCD_GP_POS
+		.cprestore	SF_MCD_GP_POS
 	move		$fp, sp
 	###FIN INICIALIZACION DEL STACK FRAME DE LA FUNCION MCD###
-
-	sw		a0, 16($fp)		#guardo los argumentos en la aba de la func que me llamo
+	#guardo los argumentos en la aba de la func que me llamo
+	sw		a0, 16($fp)		
 	sw		a1, 20($fp)       	
-
-	bgtz		a0, iterando_mcd	#Si a0 > 0, ingresa al loop		
-	move		v0, a1			#Asigno en v0 el valor del parametro numeroAlto	
-	j		fin_mcd			#Si a0 <=0, salta a fin
+	#Si a0 > 0, ingresa al loop
+	bgtz		a0, iterando_mcd		
+	#Asigno en v0 el valor del parametro numeroAlto	
+	move		v0, a1
+	#Si a0 <=0, salta a fin				
+	j		fin_mcd			
 
 iterando_mcd:
-   	
-	sw		a0, 0($fp)		#guardo en la posicion 0 del stack frame el valor auxiliar
-	div		a1, a0			#Calculo el resto de la division numeroAlto/numeroBajo
-	mfhi		t0			#Guardo el valor del modulo en numeroBajo
-	lw		t1, 0($fp)		#Obtengo el valor auxiliar, guardado en la posicion 0 del stack
-	move		a0, t0                  #El resto de la division lo guardo en a0
-	move		a1, t1			#Ahora el numeroAlto es el valor auxiliar
-	bgtz		a0, iterando_mcd	#Si a0 es mayor a 0, sigue en el loop. Caso contrario va a  fin_mcd
+	#guardo en la posicion 0 del stack frame el valor auxiliar
+	sw		a0, 0($fp)
+	#Calculo el resto de la division numeroAlto/numeroBajo		
+	div		a1, a0
+	#Guardo el valor del modulo en numeroBajo			
+	mfhi		t0	
+	#Obtengo el valor auxiliar, guardado en la posicion 0 del stack		
+	lw		t1, 0($fp)
+	#El resto de la division lo guardo en a0		
+	move		a0, t0
+	#Ahora el numeroAlto es el valor auxiliar                 
+	move		a1, t1
+	#Si a0 es mayor a 0, sigue en el loop. Caso contrario va a  fin_mcd			
+	bgtz		a0, iterando_mcd	
 
 fin_mcd:
-	move		v0, a1		        #El numero alto es lo que retorna la funcion
+	#El numero alto es lo que retorna la funcion
+	move		v0, a1		        
 	###RESTAURO LOS REGISTROS###
 	move		sp,  $fp
 	lw		gp,  SF_MCD_GP_POS(sp)
@@ -83,25 +92,34 @@ mcm:
 	subu		sp, sp, SF_SIZE_MCM
 	sw		ra, SF_MCM_RA_POS(sp)
 	sw		$fp, SF_MCM_FP_POS(sp) 
-    	.cprestore	SF_MCM_GP_POS
+		.cprestore	SF_MCM_GP_POS
 	move		$fp, sp
 	###FIN INICIALIZACION DEL STACK FRAME DE LA FUNCION MCM###
 
-        sw		a0, SF_MCM_A0_POS($fp)		#guardo en la aba de la func que me llamo los argumentos
+	#guardo en la aba de la func que me llamo los argumentos
+	sw		a0, SF_MCM_A0_POS($fp)		
 	sw		a1, SF_MCM_A1_POS($fp)		
-
-	mult		a0, a1				#multiplico numeroBajo*numeroAlto = numerador
-	mflo		t0				#guardo en t0 el resultado de la multiplicacion anterior (numerador)
-	sw		t0, 16($fp)			#guardo en el stack el numerador		
-	jal 		mcd				#llamo a la funcion mcd con los parametros a0 y a1
+	#multiplico numeroBajo*numeroAlto = numerador
+	mult		a0, a1
+	#guardo en t0 el resultado de la multiplicacion anterior (numerador)				
+	mflo		t0	
+	#guardo en el stack el numerador			
+	sw		t0, 16($fp)	
+	#llamo a la funcion mcd con los parametros a0 y a1				
+	jal 		mcd				
 
 sigue:
-	sw		v0, 20($fp)			#guardo en el stack el valor de mcd, valor que retorno la funcion (es el denominador)
-	lw		t0, 16($fp)			#recupero del stack el valor de numeroBajo*numeroAlto
-	div		t0,v0				#Hago (numeroBajo*numeroAlto)/(mcd(numeroBajo,numeroAlto))
+	#guardo en el stack el valor de mcd, valor que retorno la funcion (es el denominador)
+	sw		v0, 20($fp)
+	#recupero del stack el valor de numeroBajo*numeroAlto			
+	lw		t0, 16($fp)
+	#Hago (numeroBajo*numeroAlto)/(mcd(numeroBajo,numeroAlto))			
+	div		t0,v0				
 	mflo		t1
-	move		v0,t1				#Guardo en V1 el resultado de mcm
-	sw		t1,24($fp)			#Guardo en el stack el resultado de mcm
+	#Guardo en V1 el resultado de mcm
+	move		v0,t1	
+	#Guardo en el stack el resultado de mcm			
+	sw		t1,24($fp)			
 	
 	###FIN MCM###
 	###RESTAURO LOS REGISTROS###
