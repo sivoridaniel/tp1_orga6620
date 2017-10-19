@@ -50,7 +50,11 @@ void mostrarAyuda(){
 
 //Se verifica que los parametros ingresados sigan el formato predeterminado
 int validarArgumentos(int argc, char **argv){
-	if ((argc > TODOS_LOS_ARGUMENTOS) || (argc < DOS_ARGUMENTOS)){
+	if (argc > TODOS_LOS_ARGUMENTOS) {
+		printf("%s\n", "Error: demasiados argumentos.");
+		return ERROR_COMANDO_INVALIDO;
+	} else if (argc < DOS_ARGUMENTOS){
+		printf("%s\n", "Error: argumentos insuficientes.");
 		return ERROR_COMANDO_INVALIDO;
 	}
 	
