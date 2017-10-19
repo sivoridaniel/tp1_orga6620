@@ -50,7 +50,11 @@ void mostrarAyuda(){
 
 //Se verifica que los parametros ingresados sigan el formato predeterminado
 int validarArgumentos(int argc, char **argv){
-	if ((argc > TODOS_LOS_ARGUMENTOS) || (argc < DOS_ARGUMENTOS)){
+	if (argc > TODOS_LOS_ARGUMENTOS) {
+		printf("%s\n", "Error: demasiados argumentos.");
+		return ERROR_COMANDO_INVALIDO;
+	} else if (argc < DOS_ARGUMENTOS){
+		printf("%s\n", "Error: argumentos insuficientes.");
 		return ERROR_COMANDO_INVALIDO;
 	}
 	
@@ -58,15 +62,20 @@ int validarArgumentos(int argc, char **argv){
 		if (strcmp(argv[OPCION], "-h") != CORRECTO){
 			if (strcmp(argv[OPCION], "-V") != CORRECTO){
 				if (argc > TRES_ARGUMENTOS){
-					if (((strcmp(argv[OPCION], "-d") != CORRECTO) && (strcmp(argv[OPCION], "-m") != CORRECTO) && (strcmp(argv[OPCION], "-o") != CORRECTO)) || ((strcmp(argv[OPCION_OUTPUT_FILE], "-o") != CORRECTO))){
+					if (((strcmp(argv[OPCION], "-d") != CORRECTO) &&
+						 (strcmp(argv[OPCION], "-m") != CORRECTO) &&
+						 (strcmp(argv[OPCION], "-o") != CORRECTO)) ||
+						 ((strcmp(argv[OPCION_OUTPUT_FILE], "-o") != CORRECTO))){
 						return ERROR_COMANDO_INVALIDO;
 					}
 					else {
-						if ((atoi(argv[argc-1]) > MAXIMO) || (atoi(argv[argc-1]) < MINIMO)){
+						if ((atoi(argv[argc-1]) > MAXIMO) ||
+						    (atoi(argv[argc-1]) < MINIMO)) {
 							return ERROR_FUERA_DE_RANGO;
 						}
 		
-						if ((atoi(argv[argc-2]) > MAXIMO) || (atoi(argv[argc-2]) < MINIMO)){
+						if ((atoi(argv[argc-2]) > MAXIMO) ||
+						    (atoi(argv[argc-2]) < MINIMO)) {
 							return ERROR_FUERA_DE_RANGO;
 						}
 					}
@@ -129,7 +138,8 @@ int realizarAccion(int argc, char **argv){
 				}
 			}
 			mensajeDeError = generarArchivo(resultado);
-			if (((argc > TRES_ARGUMENTOS) && (strcmp(argv[OPCION_GUION], "-") == CORRECTO)) || (argc == TRES_ARGUMENTOS)){
+			if (((argc > TRES_ARGUMENTOS) && (strcmp(argv[OPCION_GUION], "-") == CORRECTO)) ||
+				 (argc == TRES_ARGUMENTOS)){
 				imprimirPorPantalla(resultado);
 			}
 		}

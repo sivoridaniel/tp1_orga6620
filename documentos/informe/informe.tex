@@ -1,16 +1,70 @@
 \documentclass[a4paper,10pt]{article}
-% Paquete para la inclusion de graficos.
+
 \usepackage{graphicx}
 \usepackage[ansinew]{inputenc}
 \usepackage[spanish]{babel}
-% Paqiete para la inclusion de PDFs.
 \usepackage{pdfpages}
 \usepackage{listings}
+\usepackage{hyperref} 
+\usepackage{color}
+\usepackage{mips}
+
 \graphicspath{ {src/images/} }
 
-\title{
-	\textbf{Trabajo Práctico Nº 1: Conjunto de instrucciones MIPS}
+\definecolor{Cgreen}{rgb}{0,0.6,0}
+\definecolor{Cgray}{rgb}{0.5,0.5,0.5}
+\definecolor{Cpurple}{rgb}{0.58,0,0.82}
+\definecolor{Cwhite}{rgb}{255,255,255}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{CStyle}{
+    backgroundcolor=\color{Cwhite},   
+    commentstyle=\color{Cgreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{Cgray},
+    stringstyle=\color{Cpurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=C
 }
+
+\lstdefinestyle{AssemblyMIPS}{ 
+  language=[mips]Assembler,       
+  basicstyle=\footnotesize,       
+  numbers=left,                  
+  numberstyle=\tiny\color{gray},  
+  stepnumber=1,                                                 
+  numbersep=5pt,                  
+  backgroundcolor=\color{white},  
+  showspaces=false,               
+  showstringspaces=false,         
+  showtabs=false,                 
+  frame=single,                   
+  rulecolor=\color{black},        
+  tabsize=4,                      
+  captionpos=b,                   
+  breaklines=true,                
+  breakatwhitespace=false,        
+  title=\lstname,                 
+  keywordstyle=\color{blue},     
+  commentstyle=\color{dkgreen},   
+  stringstyle=\color{mauve},      
+  escapeinside={\%*}{*)},       
+  morekeywords={*,...}        
+}
+
+\title{\textbf{Trabajo Práctico Nº 1: Conjunto de instrucciones MIPS}}
 
 \author{
 	Sebastian Ripari, \textit{Padrón Nro. 96.453}\\
@@ -50,7 +104,8 @@ El \textit{algoritmo de Euclides} es un método antiguo y eficaz para calcular el
 \subsection{Consideraciones:}
 
 \begin{enumerate}
-\item Antes de realizar la codificación de las funciones MCD y MCM en código MIPS 32 se hizo un gráfico del stack frame de ambas, teniendo en cuenta que la función MCD se la dibujo sin ABA y sin el registro ra (return address), y lo contrario con la función MCM la cual invoca a la anterior, resultando ser una función no hoja. Siguiendo los lineamientos del stack frame (SF) se crean 4 áreas en el SF de cada función (SRA, FRA, LTA y ABA).
+\item Antes de realizar la codificación de las funciones MCD y MCM en código MIPS 32 se hizo un gráfico del stack frame de ambas, teniendo en cuenta que la función MCD se la dibujo sin ABA y sin el registro ra (return address), y lo contrario con la función MCM la cual invoca a la anterior, resultando ser una función no hoja. Siguiendo los lineamientos del stack frame (SF) se crean 4 áreas en el SF de cada función (SRA, LTA y ABA).
+
 \item Cada area del stack frame debe tener su padding si lo necesita, para que sean múltiplos de 8 bytes.
 
 \item Con el stack de ambas funciones comenzamos pasar el código de C a lenguaje MIPS 32, respetando la convención de la ABI.
@@ -102,8 +157,15 @@ Ejecutamos desde la carpeta tp1\_orga6620/pruebas/ el script pruebas.sh, en netb
 root@:\textasciitilde/tp1/tp1\_orga6620/Pruebas\# bash pruebas.sh|
 
 \subsection{Comienzo de pruebas:}
+
+\textbf{Test n}\newline
+Descripcion\newline
+\textbf{Comando}\newline
+Salidas
+
 \subsubsection{Test 1}
-Mostramos el mensaje de ayuda usando la opcion -h.\newline \newline
+Mostramos el mensaje de ayuda usando la opcion -h.\newline 
+\textbf{./common -h} \newline
 Usage:\newline
 \verb|        common -h|\newline
 \verb|        common -V|\newline
@@ -114,70 +176,67 @@ Usage:\newline
 \verb|        -o,             --output        Path to output file.|\newline
 \verb|        -d              --divisor       Just the divisor|\newline
 \verb|        -m              --multiple      Just the multiple|\newline
-\verb|Examples:|
-\verb|        common -o - 256 19|
+\verb|Examples:|\newline
+\verb|        common -o - 256 19|\newline
 
 
 \subsubsection{Test 2}
 Mostramos la versión del common usando la opción -V. \newline
- Common version 1.0 \newline
+\textbf{./common -V} \newline
+Common version 1.0 \newline
 
 \subsubsection{Test 3}
 Mostramos por stdout el máximo común divisor entre 5 y 10.\newline
-5
+\textbf{./common -d -o - 5 10} \newline
+5\newline
 
 \subsubsection{Test 4}
 Mostramos por stdout el minimo común múltiplo entre 5 y 10.\newline
-10
+\textbf{./common -m -o - 5 10} \newline
+10\newline
 
 \subsubsection{Test 5}
 Mostramos por stdout el mcm y el mcd entre 5 y 10.\newline
+\textbf{./common 5 10} \newline
 5\newline
-10
+10\newline
 
 \subsubsection{Test 6}
 Mostramos por stdout el mcd entre 256 y 192.\newline
-64
+\textbf{./common -d -o - 256 192}\newline
+64\newline
 
 \subsubsection{Test 7}
 Mostramos por stdout el mcm entre 256 y 192.\newline
-768
+\textbf{./common -m -o - 256 192}\newline
+768\newline
 
 \subsubsection{Test 8}
 Mostramos por stdout el mcd y el mcm entre 256 y 192.\newline
+\textbf{./common 256 192}\newline
 64\newline
 768\newline
 
 \subsubsection{Test 9}
 Mostramos por stdout el mcd entre 1111 y 1294.\newline
-1
+\textbf{./common -d -o - 1111 1294}\newline
+1\newline
 
 \subsubsection{Test 10}
 Mostramos por stdout el mcm entre 1111 y 1294.\newline
-1437634
+\textbf{./common -m -o - 1111 1294}\newline
+1437634\newline
 
 \subsubsection{Test 11}
 Mostramos por stdout el mcd y el mcm entre 1111 y 1294.\newline
+\textbf{./common -m -o - 1111 1294}\newline
 1\newline
-1437634
-
-\subsubsection{Test 12}
-Ingresamos un comando invalido (./common -i 5 10).
-
-\subsubsection{Test 13}
-Ingresamos un argumento extra en la opción -h (./common -h 10).
-
-\subsubsection{Test 14}
-Ingresamos un comando invalido (./common aaa bbb ccc ).
+1437634\newline
 
 \subsubsection{Test 15}
-No pasamos ningún parámetro (./common).
-
-\subsubsection{Test 16}
-No pasamos el parámetro número en la opción -d (./common -d).
-
-\subsubsection{Test 17}
-Pasamos letras en lugar del número (./common -d -o - sss).
+No pasamos ningún parámetro (./common).\newline
+\textbf{./common}\newline
+Error: argumentos insuficientes.\newline
 
 \null\newpage
 
@@ -195,7 +254,7 @@ Esto es para respetar la convención de la ABI, dado que la función llamada deber
 
 \# multiplico numeroBajo*numeroAlto = numerado	\newline
 mult	a0, a1\newline\newline
-\# guardo en t0 el resultado de la multiplicacion anterior (numerador)
+\# guardo en t0 el resultado de la multiplicacion anterior (numerador) \newline
 mflo	t0\newline\newline
 \# guardo en el stack el numerador\newline	
 sw		t0, 16(\$fp)\newline\newline
@@ -223,15 +282,16 @@ Aquí es importante destacar que antes de hacer el llamado a la función mcd, se g
 
 \includegraphics[scale=0.8]{stackmcd}
 
+Es función hoja (leaf), porque no llama a otras funciones.
+Por ser una función hoja no tiene ABA y la SRA no tiene ra.
+El tamaño del stack frame de la función mcd es de 16 words.
+
 \subsection{MCM}
 
 \includegraphics[scale=0.8]{stackmcm}
 
-\begin{figure}[!htp]
-\begin{center}
-
-\end{center}
-\end{figure}
+Función no hoja (non leaf), porque llama a la función MCD.
+Por ser una función no hoja tiene ABA, dado que a través de esta área se guardan los parámetros que se utilizan para llamar a otras funciones. La función llamada (invocada) guarda en la ABA de la función que la llamó los parámetros antes de ser utilizados. Además en la saved register area (SRA) de la función llamante se guardará el valor de la dirección a la próxima instrucción al llamado de la función, luego de que la función llamada finalice retornando un valor (en el registro v0) o no.
 
 \section{Conclusiones}
 
@@ -241,19 +301,36 @@ Otro hito importante fue el uso de gdb, mediante el cual pudimos debuguear el pr
 \null\newpage
 
 \section{El código fuente, en lenguaje C:}
-	
-	\lstinputlisting[language=C]{../../common.c}
-	\lstinputlisting[language=C]{../../commonfunc.h}
-	\lstinputlisting[language=C]{../../commonfunc.c}
-	\lstinputlisting[language=C]{../../mathfunc.h}	
-	\lstinputlisting[language=C]{../../mathfunc.c}	
+
+{\huge{common.c}}
+\newline
+\lstinputlisting[style=CStyle]{../../common.c}
+
+{\huge{commonfunc.h}}
+\newline
+\lstinputlisting[style=CStyle]{../../commonfunc.h}
+
+{\huge{commonfunc.c}}
+\newline
+\lstinputlisting[style=CStyle]{../../commonfunc.c}
+
+{\huge{mathfunc.h}}
+\newline
+\lstinputlisting[style=CStyle]{../../mathfunc.h}	
+
+{\huge{mathfunc.c}}
+\newline
+\lstinputlisting[style=CStyle]{../../mathfunc.c}	
 
 \null\newpage
 
 \section{El código Assembler:}
-\lstinputlisting[language={[x86masm]Assembler}, firstline=1, lastline=116, basicstyle=\small]{../../mathfunc.S}
+
+\lstinputlisting[style=AssemblyMIPS]{../../mathfunc.S}
 
 \newpage
+
+\section{Enunciado}
 
 \includepdf[pages={1-}]{src/enunciado.pdf}
 
@@ -270,3 +347,5 @@ Otro hito importante fue el uso de gdb, mediante el cual pudimos debuguear el pr
 \end{thebibliography} 
 
 \end{document}
+
+

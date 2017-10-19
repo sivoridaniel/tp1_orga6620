@@ -26,6 +26,11 @@
 
 #define ALGUN_PROBLEMA 0
 
+//Pre: Se ingresa el arreglo y su cantidad maxima de elementos.
+//Pos: Los valores distintos a cero en el arreglo seran los numeros primos buscados. 
+void encontrarNumerosPrimos(int tope, int arreglo[]);
+
+
 //Pre: Se ingresa el arreglo.
 //Pos: Se imprimen por pantalla el o los resultados.
 void imprimirPorPantalla(int resultado[]);
@@ -41,6 +46,8 @@ void mostrarAyuda();
 void mostrarVersion();
 
 //Verifica que los argumentos sean -h, -V, -o N, - N; donde N es un entero mayor que 2 y menor que el maximo (4096).
+//Verifica que los argumentos sean -h, -V, -o N, - N; 
+//donde N es un entero mayor que 2 y menor que el maximo (yo puse 4096).
 //Devuelve: 1 si el entero se escapa del rango predeterminado.
 //			2 si no se ingresaron comando validos.
 //			0 si todos los argumentos son validos y se puede proceder.
