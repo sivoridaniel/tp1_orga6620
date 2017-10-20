@@ -69,12 +69,12 @@ fin_mcd:
 #########FUNCION NO HOJA MCM############
 
 #STATICS VAR DEFINITIONS FUNCTION MCM
-#define SF_MCM_A1_POS	  52 
-#define SF_MCM_A0_POS	  48 
-#define SF_SIZE_MCM	  48 
-#define SF_MCM_FP_POS     40
-#define SF_MCM_GP_POS     36 
-#define SF_MCM_RA_POS     32 
+#define SF_MCM_A1_POS	  44 
+#define SF_MCM_A0_POS	  40 
+#define SF_SIZE_MCM	  40 
+#define SF_MCM_FP_POS     32
+#define SF_MCM_GP_POS     28 
+#define SF_MCM_RA_POS     24 
 
 .text
 .abicalls
@@ -91,34 +91,38 @@ mcm:
 	subu		sp, sp, SF_SIZE_MCM
 	sw		ra, SF_MCM_RA_POS(sp)
 	sw		$fp, SF_MCM_FP_POS(sp) 
-		.cprestore	SF_MCM_GP_POS
+	.cprestore	SF_MCM_GP_POS
 	move		$fp, sp
 	###FIN INICIALIZACION DEL STACK FRAME DE LA FUNCION MCM###
 
 	#guardo en la aba de la func que me llamo los argumentos
 	sw		a0, SF_MCM_A0_POS($fp)		
 	sw		a1, SF_MCM_A1_POS($fp)		
-	#multiplico numeroBajo*numeroAlto = numerador
-	mult		a0, a1
-	#guardo en t0 el resultado de la multiplicacion anterior (numerador)				
-	mflo		t0	
-	#guardo en el stack el numerador			
-	sw		t0, 16($fp)	
-	#llamo a la funcion mcd con los parametros a0 y a1				
+	
+	#llamo a la funcion mcd con los parametros numeroBajo y numeroAlto
 	jal 		mcd				
 
 sigue:
 	#guardo en el stack el valor de mcd, valor que retorno la funcion (es el denominador)
-	sw		v0, 20($fp)
-	#recupero del stack el valor de numeroBajo*numeroAlto			
-	lw		t0, 16($fp)
-	#Hago (numeroBajo*numeroAlto)/(mcd(numeroBajo,numeroAlto))			
-	div		t0,v0				
-	mflo		t1
-	#Guardo en V1 el resultado de mcm
-	move		v0,t1	
+	sw		v0, 16($fp)
+	#recupero del stack el valor de numeroBajo en el registro t0
+        lw              t0, SF_MCM_A0_POS($fp) 
+        #recupero del stack el valor de numeroAlto en el registro t1
+	lw		t1, SF_MCM_A1_POS($fp)
+	#Hago (numeroBajo)/(mcd(numeroBajo,numeroAlto))
+	div		t0,v0
+	#Guardo en el registro t0 el resultado de la division
+        mflo		t0 
+	#Hago numeroAlto* t0(resultado de la division)
+	mult		t1,t0
+	#Guardo el resultado de la operacion anterior en el registro t2
+	mflo		t2	
+
+	#Guardo en V0 el resultado de mcm
+	move		v0,t2	
+        
 	#Guardo en el stack el resultado de mcm			
-	sw		t1,24($fp)			
+	sw		t2,20($fp)			
 	
 	###FIN MCM###
 	###RESTAURO LOS REGISTROS###
